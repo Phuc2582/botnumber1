@@ -1,0 +1,27 @@
+name: Daily Scheduled Job
+
+on:
+  schedule:
+    # cron: '1 0 * * *' => chạy vào 00:01 UTC (7:01 sáng VN)
+    - cron: '1 0 * * *'
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          # nếu bạn có requirements.txt thì cài
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run Python script
+        run: python botnumber1.py
